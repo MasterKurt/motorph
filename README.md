@@ -1,7 +1,7 @@
 
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.SimpleTimeFormat;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -29,7 +29,7 @@ public class Motorph {
         System.out.print("Enter logout time (ex. 17:00): ");
         String logoutTimeStr = scanner.nextLine();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        SimpleTimeFormat timeFormat = new SimpleTimeFormat("hh:mm");
         try {
             Date loginTime = dateFormat.parse(loginTimeStr);
             Date logoutTime = dateFormat.parse(logoutTimeStr);
