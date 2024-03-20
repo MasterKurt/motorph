@@ -1,59 +1,101 @@
+package projectpayroll;
+
+        import java.text.SimpleDateFormat;
+        import java.util.Date;
+        import java.util.Scanner;
+
+        
+public class payroll {
+
+	public static void main(String[] args) {
+		
 
 
-import java.text.ParseException;
-import java.text.SimpleTimeFormat;
-import java.util.Date;
-import java.util.Scanner;
+				Scanner s = new Scanner(System.in);
+				SimpleDateFormat dF = new SimpleDateFormat("hh:mm");
+				
+				String names;
+				System.out.print("Employee Name: ");
+				names = s.nextLine();
+				
+				String idNumber;
+				System.out.print("Employee ID: ");
+				idNumber = s.nextLine();
 
-/**
- *
- * @author ACER
- */
-public class Motorph {
+				String loginTimeStr;
+				System.out.print("Login Time(ex. 08:00): ");
+				loginTimeStr = s.nextLine();
+				
+				String logoutTimeStr;
+				System.out.print("Logout Time (ex. 17:00): ");
+				logoutTimeStr = s.nextLine();
+				
+				
+				try {
+					Date LoginTime = dF.parse(loginTimeStr);
+					Date logoutTime = dF.parse(logoutTimeStr);
+					
+					long diffInMillies = logoutTime.getTime() - LoginTime.getTime();
+					double hoursWorked = (double) diffInMillies / (60 * 60 * 1000);
+					
+					System.out.println("\nEmployee Details:");
+					System.out.println("Employee Name: " + names);
+					System.out.println("Employee ID: " +idNumber);
+					System.out.println("Login Time: " +loginTimeStr);
+					System.out.println("Logout Time: " +logoutTimeStr);
+					System.out.printf("Hours Worked: %.2f\n", hoursWorked - 1);
+					
+					int daysinweek = 5;
+		            double hourlyRate = 100; 
+		            double weeklySalary = hoursWorked * daysinweek * hourlyRate;
+		            System.out.printf("\nWeekly Salary:  ₱%.2f\n", weeklySalary);
+		            
+		            double monthlySalary = 18000.00; // Employee's monthly salary
+		            double taxRate;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+		            if (monthlySalary < 20000.00) {
+		                taxRate = 0;
+		            } else if (monthlySalary > 20000.00) {
+		                taxRate = 0.2;
+		            } else {
+		                taxRate = 0.3;
+		            }
 
-        System.out.print("Enter employee ID: ");
-        String employeeID = scanner.nextLine();
+		            double taxDeduction = monthlySalary * taxRate;
+		            double pagIbigDeduction = 200.00;
+		            double sssDeduction = 800.00;
+		            double lunchDeduction = 100.00;
 
-        System.out.print("Enter employee last name: ");
-        String lastName = scanner.nextLine();
+		            // Other deductions...
+		            // double otherDeduction = ...
 
-        System.out.print("Enter employee first name: ");
-        String firstName = scanner.nextLine();
+		            double totalDeductions = taxDeduction + pagIbigDeduction + sssDeduction + lunchDeduction;
+		            
+		            double netPay = monthlySalary - totalDeductions;
 
-        System.out.print("Enter login time (ex. 08:00): ");
-        String loginTimeStr = scanner.nextLine();
+		            // Print payslip
+		            System.out.println("\nPayslip:");
+		            System.out.println("Monthly Salary: ₱" + monthlySalary);
+		            System.out.println("Tax Deduction: ₱" + taxDeduction);
+		            System.out.println("Pag-IBIG Deduction: ₱" + pagIbigDeduction);
+		            System.out.println("SSS Deduction: ₱" + sssDeduction);
+		            System.out.println("Lunch Deduction: ₱" + lunchDeduction);
+		            System.out.println("Total Deductions: ₱" + totalDeductions);
+		            System.out.println("Total Deductions: ₱" + totalDeductions);
+		            System.out.println("Net Pay: ₱" + netPay);
+		            
+		           
 
-        System.out.print("Enter logout time (ex. 17:00): ");
-        String logoutTimeStr = scanner.nextLine();
+				} catch (Exception e) {
+					System.out.println("Error. Please enter the correct time format.");
+		        } finally {
+		            s.close();
+		        }		
 
-        SimpleTimeFormat timeFormat = new SimpleTimeFormat("hh:mm");
-        try {
-            Date loginTime = dateFormat.parse(loginTimeStr);
-            Date logoutTime = dateFormat.parse(logoutTimeStr);
+			}
 
-            long diffInMillies = logoutTime.getTime() - loginTime.getTime();
-            double hoursWorked = (double) diffInMillies / (60 * 60 * 1000);
+		
+	}
 
-            System.out.println("\nEmployee Details:");
-            System.out.println("ID: " + employeeID);
-            System.out.println("Last Name: " + lastName);
-            System.out.println("First Name: " + firstName);
-            System.out.println("Time In: " + loginTimeStr);
-            System.out.println("Time Out: " + logoutTimeStr);
-            System.out.printf("Hours Worked: %.2f\n", hoursWorked);
 
-            int daysinweek = 5;
-            double hourlyRate = 100; 
-            double weeklySalary = hoursWorked * daysinweek * hourlyRate;
-            System.out.printf("\nWeekly Salary:  ₱%.2f\n", weeklySalary);
 
-        } catch (ParseException e) {
-            System.out.println("Error parsing time. Please enter time in the correct format (e.g., 08:00 AM)");
-        } finally {
-            scanner.close();
-        }
-    }
-}
